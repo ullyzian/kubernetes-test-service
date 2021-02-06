@@ -60,7 +60,6 @@ spec:
         - name: postgres-data
           persistentVolumeClaim:
             claimName: postgres-data
-status: {}
 ---
 apiVersion: v1
 kind: Service
@@ -79,5 +78,3 @@ spec:
       targetPort: 5432
   selector:
     io.kompose.service: postgres
-status:
-  loadBalancer: {}

@@ -5,11 +5,10 @@ metadata:
   labels:
     app: web
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: web
-  strategy: {}
   template:
     metadata:
       labels:
@@ -17,17 +16,11 @@ spec:
     spec:
       containers:
         - name: flask
-          args:
-            - flask
-            - run
-            - --host
-            - 0.0.0.0
           image: ullyzian/flask-app:latest
+          imagePullPolicy: "Always"
           ports:
             - containerPort: 5000
-          resources: {}
       restartPolicy: Always
-status: {}
 ---
 apiVersion: v1
 kind: Service
@@ -36,10 +29,9 @@ metadata:
   labels:
     app: web
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 5000
+      targetPort: 5000
   selector:
     app: web
-status:
-  loadBalancer: {}
