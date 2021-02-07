@@ -1,9 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   labels:
-    io.kompose.service: postgres-data
+    postgres-data: postgres-data
   name: postgres-data
 spec:
   accessModes:
@@ -11,33 +10,24 @@ spec:
   resources:
     requests:
       storage: 100Mi
-status: {}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.22.0 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: postgres
-  name: postgres
+    app: postgresdb
+  name: postgresdb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: postgres
+      app: postgresdb
   strategy:
     type: Recreate
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert
-        kompose.version: 1.22.0 (HEAD)
-      creationTimestamp: null
       labels:
-        io.kompose.service: postgres
+        app: postgresdb
     spec:
       containers:
         - env:
@@ -48,10 +38,9 @@ spec:
             - name: POSTGRES_USER
               value: user
           image: library/postgres:12.0
-          name: postgres
+          name: postgresdb
           ports:
             - containerPort: 5432
-          resources: {}
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-data
@@ -64,17 +53,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.22.0 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: postgres
-  name: postgres
+    app: postgresdb
+  name: postgresdb
 spec:
+  type: NodePort
   ports:
-    - name: "5432"
-      port: 5432
-      targetPort: 5432
+    - port: 5432
+      nodePort: 32000
   selector:
-    io.kompose.service: postgres
+    app: postgresdb

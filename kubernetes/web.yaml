@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: flask
-          image: ullyzian/flask-app:latest
-          imagePullPolicy: "Always"
+          image: ullyzian/flask-app:1.0.2
+          imagePullPolicy: "Never"
           ports:
             - containerPort: 5000
       restartPolicy: Always
