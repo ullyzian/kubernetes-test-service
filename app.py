@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
+    # My flask route
     with conn.cursor() as curs:
         curs.execute("SELECT version();")
         version = curs.fetchone()
