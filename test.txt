@@ -1,7 +1,0 @@
-Dockerfile
-README.md
-app.py
-kubernetes
-poetry.lock
-pyproject.toml
-test.txt
