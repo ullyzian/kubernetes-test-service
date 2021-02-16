@@ -6,6 +6,9 @@ conn = psycopg2.connect(dbname="database", user="user", password="password", hos
 
 app = Flask(__name__)
 
+"""
+Add simple multicomment to practice more git
+"""
 
 @app.route('/')
 def hello_world():
