@@ -8,6 +8,8 @@ app = Flask(__name__)
 
 """
 Add simple multicomment to practice more git
+
+Other version of new multicomment part
 """
 
 @app.route('/')
